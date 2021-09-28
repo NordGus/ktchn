@@ -59,25 +59,25 @@ RSpec.describe "/cookbook/recipes", type: :request do
     context "with valid parameters" do
       it "creates a new Cookbook::Recipe" do
         expect {
-          post cookbook_recipes_url, params: { cookbook_recipe: valid_attributes }
+          post cookbook_recipes_url, params: { recipe: valid_attributes }
         }.to change(Cookbook::Recipe, :count).by(1)
       end
 
       it "redirects to the created cookbook_recipe" do
-        post cookbook_recipes_url, params: { cookbook_recipe: valid_attributes }
-        expect(response).to redirect_to(cookbook_recipe_url(@cookbook_recipe))
+        post cookbook_recipes_url, params: { recipe: valid_attributes }
+        expect(response).to redirect_to(cookbook_recipe_url(@recipe))
       end
     end
 
     context "with invalid parameters" do
       it "does not create a new Cookbook::Recipe" do
         expect {
-          post cookbook_recipes_url, params: { cookbook_recipe: invalid_attributes }
+          post cookbook_recipes_url, params: { recipe: invalid_attributes }
         }.to change(Cookbook::Recipe, :count).by(0)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do
-        post cookbook_recipes_url, params: { cookbook_recipe: invalid_attributes }
+        post cookbook_recipes_url, params: { recipe: invalid_attributes }
         expect(response).to be_successful
       end
     end
@@ -91,14 +91,14 @@ RSpec.describe "/cookbook/recipes", type: :request do
 
       it "updates the requested cookbook_recipe" do
         recipe = Cookbook::Recipe.create! valid_attributes
-        patch cookbook_recipe_url(cookbook_recipe), params: { cookbook_recipe: new_attributes }
+        patch cookbook_recipe_url(cookbook_recipe), params: { recipe: new_attributes }
         recipe.reload
         skip("Add assertions for updated state")
       end
 
       it "redirects to the cookbook_recipe" do
         recipe = Cookbook::Recipe.create! valid_attributes
-        patch cookbook_recipe_url(cookbook_recipe), params: { cookbook_recipe: new_attributes }
+        patch cookbook_recipe_url(cookbook_recipe), params: { recipe: new_attributes }
         recipe.reload
         expect(response).to redirect_to(cookbook_recipe_url(recipe))
       end
@@ -107,7 +107,7 @@ RSpec.describe "/cookbook/recipes", type: :request do
     context "with invalid parameters" do
       it "renders a successful response (i.e. to display the 'edit' template)" do
         recipe = Cookbook::Recipe.create! valid_attributes
-        patch cookbook_recipe_url(cookbook_recipe), params: { cookbook_recipe: invalid_attributes }
+        patch cookbook_recipe_url(cookbook_recipe), params: { recipe: invalid_attributes }
         expect(response).to be_successful
       end
     end

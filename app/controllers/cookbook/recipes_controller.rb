@@ -3,7 +3,8 @@ class Cookbook::RecipesController < CookbookController
 
   # GET /cookbook/recipes
   def index
-    @cookbook_recipes = Cookbook::Recipe.all
+    @recipes = Cookbook::Recipe.all
+    render layout: false
   end
 
   # GET /cookbook/recipes/1
@@ -12,7 +13,7 @@ class Cookbook::RecipesController < CookbookController
 
   # GET /cookbook/recipes/new
   def new
-    @cookbook_recipe = Cookbook::Recipe.new
+    @recipe = Cookbook::Recipe.new
   end
 
   # GET /cookbook/recipes/1/edit
@@ -21,10 +22,10 @@ class Cookbook::RecipesController < CookbookController
 
   # POST /cookbook/recipes
   def create
-    @cookbook_recipe = Cookbook::Recipe.new(cookbook_recipe_params)
+    @recipe = Cookbook::Recipe.new(cookbook_recipe_params)
 
-    if @cookbook_recipe.save
-      redirect_to @cookbook_recipe, notice: 'Recipe was successfully created.'
+    if @recipe.save
+      redirect_to @recipe, notice: 'Recipe was successfully created.'
     else
       render :new
     end
@@ -32,8 +33,8 @@ class Cookbook::RecipesController < CookbookController
 
   # PATCH/PUT /cookbook/recipes/1
   def update
-    if @cookbook_recipe.update(cookbook_recipe_params)
-      redirect_to @cookbook_recipe, notice: 'Recipe was successfully updated.'
+    if @recipe.update(cookbook_recipe_params)
+      redirect_to @recipe, notice: 'Recipe was successfully updated.'
     else
       render :edit
     end
@@ -41,18 +42,18 @@ class Cookbook::RecipesController < CookbookController
 
   # DELETE /cookbook/recipes/1
   def destroy
-    @cookbook_recipe.destroy
+    @recipe.destroy
     redirect_to cookbook_recipes_url, notice: 'Recipe was successfully destroyed.'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cookbook_recipe
-      @cookbook_recipe = Cookbook::Recipe.find(params[:id])
+      @recipe = Cookbook::Recipe.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def cookbook_recipe_params
-      params.require(:cookbook_recipe).permit(:name, :description, :preparion)
+      params.require(:recipe).permit(:name, :description, :preparion)
     end
 end

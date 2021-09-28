@@ -1,3 +1,22 @@
-<div data-controller="hello" class="color-gray-800">
-  <h1 data-target="hello.output"></h1>
+<div class="w-80 bg-blue-300 px-4">
+  <div class="flex flex-row flex-nowrap items-center justify-between">
+    <h1 class="inline-block">Recipes</h1>
+    <%=
+      link_to 'New Recipe',
+              new_cookbook_recipe_path,
+              data: {
+                turbo: true,
+                'turbo-frame': :main_display
+              }
+    %>
+  </div>
+
+  <%= turbo_frame_tag :cookbook_recipes, src: cookbook_recipes_path do %>
+    <span>Loading...</span>
+  <% end %>
+</div>
+<div class="w-full bg-gray-100 px-4">
+  <%= turbo_frame_tag :main_display, src: new_cookbook_recipe_path, loading: 'lazy', data: { 'cookbook--ui-target': 'mainContent' } do %>
+    <span>Loading...</span>
+  <% end %>
 </div>

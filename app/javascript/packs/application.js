@@ -5,11 +5,13 @@
 
 import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
+import "@hotwired/turbo-rails"
 import "channels"
-import "@hotwired/turbo"
 
 Rails.start()
 ActiveStorage.start()
 
 import "controllers"
-require("css/application.scss")
+import "css/application.scss"
+
+document.addEventListener('turbo:load', () => console.log('Turbo!'))
