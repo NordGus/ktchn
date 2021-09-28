@@ -1,0 +1,2 @@
+module Cookbook::RecipesHelper
+end
