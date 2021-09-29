@@ -4,6 +4,8 @@ Rails.application.config.generators do |g|
                    view_specs: false,
                    helper_specs: false,
                    routing_specs: false,
-                   controller_specs: false
+                   controller_specs: false,
+                   request_specs: false
+
   g.fixture_replacement :factory_bot, suffix_factory: 'factory'
 end

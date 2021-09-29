@@ -1,10 +1,11 @@
 class Cookbook::RecipesController < CookbookController
-  before_action :set_cookbook_recipe, only: [:show, :edit, :update, :destroy]
+  layout false
+
+  before_action :set_recipe, only: [:show, :edit, :update, :destroy]
 
   # GET /cookbook/recipes
   def index
     @recipes = Cookbook::Recipe.all
-    render layout: false
   end
 
   # GET /cookbook/recipes/1
@@ -43,17 +44,18 @@ class Cookbook::RecipesController < CookbookController
   # DELETE /cookbook/recipes/1
   def destroy
     @recipe.destroy
-    redirect_to cookbook_recipes_url, notice: 'Recipe was successfully destroyed.'
+    @recipe = Cookbook::Recipe.new
+
+    # redirect_to new_cookbook_recipe_path, notice: 'Recipe was successfully destroyed.'
+    render :new
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cookbook_recipe
+    def set_recipe
       @recipe = Cookbook::Recipe.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def cookbook_recipe_params
-      params.require(:recipe).permit(:name, :description, :preparion)
+      params.require(:recipe).permit(:name, :description, :preparation)
     end
 end

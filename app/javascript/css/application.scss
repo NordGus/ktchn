@@ -23,9 +23,34 @@ body {
         @apply inline-block;
       }
     }
+
+  }
+
+  .field {
+    @apply flex flex-col flex-nowrap;
+
+    .error {
+      @apply text-red-500 text-sm;
+    }
+
+    .field_with_errors {
+      @apply block;
+
+      label {
+        @apply w-full text-red-500;
+      }
+
+      input {
+        @apply w-full border border-red-500;
+      }
+    }
   }
 
   .content {
     @apply bg-blue-100 w-full flex flex-row flex-nowrap;
+  }
+
+  turbo-frame {
+    @apply block;
   }
 }

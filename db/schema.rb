@@ -16,11 +16,12 @@ ActiveRecord::Schema.define(version: 2021_09_27_141227) do
   enable_extension "plpgsql"
 
   create_table "cookbook_recipes", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "description"
-    t.text "preparion"
+    t.text "preparation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_cookbook_recipes_on_name", unique: true
   end
 
 end

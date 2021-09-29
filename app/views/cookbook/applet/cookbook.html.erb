@@ -1,5 +1,5 @@
-<div class="w-80 bg-blue-300 px-4">
-  <div class="flex flex-row flex-nowrap items-center justify-between">
+<div class="w-80 bg-blue-300">
+  <div class="flex flex-row flex-nowrap items-center justify-between px-4 mb-4">
     <h1 class="inline-block">Recipes</h1>
     <%=
       link_to 'New Recipe',
@@ -11,12 +11,16 @@
     %>
   </div>
 
-  <%= turbo_frame_tag :cookbook_recipes, src: cookbook_recipes_path do %>
+  <%= turbo_stream_from :cookbook_recipes %>
+  <%= turbo_frame_tag :cookbook_recipes, src: cookbook_recipes_path, class: 'overflow-y-auto px-4 h-full' do %>
     <span>Loading...</span>
   <% end %>
 </div>
 <div class="w-full bg-gray-100 px-4">
-  <%= turbo_frame_tag :main_display, src: new_cookbook_recipe_path, loading: 'lazy', data: { 'cookbook--ui-target': 'mainContent' } do %>
+  <%= turbo_frame_tag :main_display,
+                      src: new_cookbook_recipe_path,
+                      data: { 'cookbook--ui-target': 'mainContent' },
+                      class: 'overflow-y-auto px-4 h-full' do %>
     <span>Loading...</span>
   <% end %>
 </div>

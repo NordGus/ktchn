@@ -971,9 +971,30 @@ module.exports = {
   plugins: [
     plugin(({addBase, theme }) => {
       addBase({
-        'h1': { fontSize: theme('fontSize.2xl') },
-        'h2': { fontSize: theme('fontSize.xl') },
-        'h3': { fontSize: theme('fontSize.lg') },
+        'h1': {
+          fontSize: theme('fontSize.3xl'),
+          fontWeight: theme('fontWeight.bold')
+        },
+        'h2': {
+          fontSize: theme('fontSize.2xl'),
+          fontWeight: theme('fontWeight.bold')
+        },
+        'h3': {
+          fontSize: theme('fontSize.lg'),
+          fontWeight: theme('fontWeight.bold')
+        },
+        'h4': {
+          fontSize: theme('fontSize.lg'),
+          fontWeight: theme('fontWeight.semibold')
+        },
+        'h5': {
+          fontSize: theme('fontSize.base'),
+          fontWeight: theme('fontWeight.semibold')
+        },
+        'h6': {
+          fontSize: theme('fontSize.base'),
+          fontWeight: theme('fontWeight.semibold')
+        },
       })
     })
   ],

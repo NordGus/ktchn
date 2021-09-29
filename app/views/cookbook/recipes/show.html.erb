@@ -4,8 +4,11 @@
   <h1><%= @recipe.name %></h1>
   <p><%= @recipe.description %></p>
 
-  <h2>Preparation</h2>
-  <p><%= @recipe.preparion %></p>
+  <% if @recipe.preparation.present? %>
+    <h2>Preparation</h2>
+    <p><%= @recipe.preparation %></p>
+  <% end %>
 
-  <%= link_to 'Edit', edit_cookbook_recipe_path(@recipe) %>
+  <%= link_to 'Edit', edit_cookbook_recipe_path(@recipe) %> |
+  <%= link_to 'Destroy', @recipe, data: { confirm: 'Are you sure?', 'turbo-method': :delete } %>
 <% end %>

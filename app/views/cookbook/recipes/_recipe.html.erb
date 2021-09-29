@@ -1,6 +1,8 @@
 <%= turbo_frame_tag dom_id(recipe) do %>
-  <%= link_to cookbook_recipe_path(recipe), class: 'block', data: { turbo: true, 'turbo-frame': :main_display } do %>
-    <h4><%= recipe.name %></h4>
-    <p><%= recipe.description %></p>
+  <%= link_to cookbook_recipe_path(recipe), class: 'block m-0 p-0', data: { turbo: true, 'turbo-frame': :main_display } do %>
+    <div class="bg-gray-200 mb-2 rounded p-2 hover:bg-gray-400 hover:text-white">
+      <h4 class=""><%= recipe.name %></h4>
+      <p><%= recipe.description %></p>
+    </div>
   <% end %>
 <% end %>
