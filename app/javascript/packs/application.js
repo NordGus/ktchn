@@ -12,6 +12,6 @@ Rails.start()
 ActiveStorage.start()
 
 import "controllers"
-import "css/application.scss"
+import "stylesheets/application.scss"
 
 document.addEventListener('turbo:load', () => console.log('Turbo!'))
