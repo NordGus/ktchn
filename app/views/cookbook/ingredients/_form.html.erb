@@ -1,0 +1,22 @@
+<%= form_with model: ingredient,
+              scope: :ingredient,
+              url: cookbook_recipe_ingredients_path(ingredient.recipe),
+              class: 'inline-form bg-blue-300' do |form| %>
+
+  <div class="field">
+    <%= form.label :amount %>
+    <%= form.number_field :amount, step: 1, max: 20 %>
+    <%= render partial: 'shared/form_errors_for', locals: { model: ingredient, attr: :portions } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :unit %>
+    <%= form.select :unit, options_from_collection_for_select(Inventory::Unit.all, :id, :name), { prompt: 'Select an unit' } %>
+    <%= render partial: 'shared/form_errors_for', locals: { model: ingredient, attr: :portions } %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn green' %>
+    <%= yield %>
+  </div>
+<% end %>

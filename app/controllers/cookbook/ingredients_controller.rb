@@ -1,11 +1,13 @@
-class Cookbook::RecipesController < CookbookController
+class Cookbook::IngredientsController < CookbookController
   layout false
 
-  before_action :set_recipe, only: [:show, :edit, :update, :destroy]
+  before_action :set_recipe
 
   # GET /cookbook/recipes
   def index
-    @recipes = Cookbook::Recipe.all
+    @ingredient = Cookbook::Ingredient.new(recipe: @recipe)
+
+    @ingredients = @recipe.ingredients.cookbook_collection
   end
 
   # GET /cookbook/recipes/1
@@ -44,7 +46,6 @@ class Cookbook::RecipesController < CookbookController
   # DELETE /cookbook/recipes/1
   def destroy
     @recipe.destroy
-    @recipe = Cookbook::Recipe.new
 
     render :new
   end
@@ -52,7 +53,7 @@ class Cookbook::RecipesController < CookbookController
   private
 
   def set_recipe
-    @recipe = Cookbook::Recipe.find(params[:id])
+    @recipe = Cookbook::Recipe.find(params[:recipe_id])
   end
 
   def cookbook_recipe_params

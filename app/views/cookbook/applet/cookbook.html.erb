@@ -1,9 +1,10 @@
-<div class="w-80 bg-blue-300">
+<div class="w-1/3 h-full bg-blue-300 pt-4 flex flex-col">
   <div class="flex flex-row flex-nowrap items-center justify-between px-4 mb-4">
     <h1 class="inline-block">Recipes</h1>
     <%=
       link_to 'New Recipe',
               new_cookbook_recipe_path,
+              class: 'btn pill black',
               data: {
                 turbo: true,
                 'turbo-frame': :main_display
@@ -16,11 +17,11 @@
     <span>Loading...</span>
   <% end %>
 </div>
-<div class="w-full bg-gray-100 px-4">
+<div class="w-full bg-gray-100 px-4 pt-4 flex">
   <%= turbo_frame_tag :main_display,
                       src: new_cookbook_recipe_path,
                       data: { 'cookbook--ui-target': 'mainContent' },
-                      class: 'overflow-y-auto px-4 h-full' do %>
+                      class: 'overflow-y-auto px-4 h-full w-full' do %>
     <span>Loading...</span>
   <% end %>
 </div>

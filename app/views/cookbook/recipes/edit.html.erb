@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "main_display" do %>
-  <%= render 'form', recipe: @recipe %>
-
-  <%= link_to 'Back', @recipe %>
+  <%= render layout: 'form', locals: { recipe: @recipe } do %>
+    <%= link_to 'Back', @recipe, class: 'btn' %>
+  <% end %>
 <% end %>

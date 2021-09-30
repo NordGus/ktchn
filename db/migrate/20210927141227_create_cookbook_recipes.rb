@@ -4,6 +4,7 @@ class CreateCookbookRecipes < ActiveRecord::Migration[6.1]
       t.string :name, null: false
       t.string :description
       t.text :preparation
+      t.integer :portions, null: false, default: 1
 
       t.timestamps
     end

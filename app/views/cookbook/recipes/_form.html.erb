@@ -6,8 +6,14 @@
   </div>
 
   <div class="field">
+    <%= form.label :portions %>
+    <%= form.number_field :portions, step: 1, max: 20 %>
+    <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :portions } %>
+  </div>
+
+  <div class="field">
     <%= form.label :description %>
-    <%= form.text_field :description %>
+    <%= form.text_area :description %>
     <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :description } %>
   </div>
 
@@ -18,6 +24,7 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'btn green' %>
+    <%= yield %>
   </div>
 <% end %>
