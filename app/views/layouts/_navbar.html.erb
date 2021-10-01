@@ -1,6 +1,26 @@
 <div class="nav">
-  <%= link_to cookbook_path do %>
-    <span class="section-icon">C</span>
-    <span class="section-name">Cookbook</span>
+  <%= link_to cookbook_path, class: nav_link_styles(:cookbook) do %>
+    <span class="section-icon">
+      <span class="icon">
+        <i class="fas fa-book-open fa-2x"></i>
+      </span>
+    </span>
+    <span>Cookbook</span>
+  <% end %>
+  <%= link_to cookbook_path, class: nav_link_styles(:menu) do %>
+    <span class="section-icon">
+      <span class="icon">
+        <i class="fas fa-calendar fa-2x"></i>
+      </span>
+    </span>
+    <span>Diet</span>
+  <% end %>
+  <%= link_to cookbook_path, class: nav_link_styles(:shopping_list) do %>
+    <span class="section-icon">
+      <span class="icon">
+        <i class="fas fa-shopping-cart fa-2x"></i>
+      </span>
+    </span>
+    <span>List</span>
   <% end %>
 </div>
