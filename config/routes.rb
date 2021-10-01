@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: 'application#applet'
+
   namespace :cookbook do
     get '/', to: 'applet#cookbook'
 

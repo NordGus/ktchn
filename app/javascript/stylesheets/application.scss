@@ -25,9 +25,34 @@ body {
 
     .nav {
       display: flex;
-      flex-flow: column nowrap;
       align-items: center;
+      justify-content: flex-start;
       background-color: $primary-dark;
+
+      @include until($widescreen) {
+        flex-flow: column-reverse nowrap;
+      }
+
+      @include from($widescreen) {
+        flex-flow: column nowrap;
+      }
+
+      &.in-root {
+        width: 100%;
+        height: 100%;
+
+        .nav-link {
+          margin: 0.5rem !important;
+          padding: 1rem !important;
+          height: 10rem !important;
+          width: 10rem !important;
+
+          .section-icon {
+            width: 5rem !important;
+            height: 5rem !important;
+          }
+        }
+      }
 
       .nav-link {
         display: inline-flex;
@@ -37,7 +62,14 @@ body {
         border-radius: $radius-large;
         color: $primary;
 
-        margin: 0.25rem 0.25rem 0;
+        @include until($widescreen) {
+          margin: 0 0.25rem 0.25rem;
+        }
+
+        @include from($widescreen) {
+          margin: 0.25rem 0.25rem 0;
+        }
+
         padding: 0.5rem;
         height: 6rem;
         width: 6rem;

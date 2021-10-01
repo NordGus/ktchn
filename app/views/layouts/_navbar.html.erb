@@ -1,8 +1,12 @@
-<div class="nav">
+<% root_view ||= false %>
+<% in_root = root_view ? 'in-root' : '' %>
+<% icon_size = root_view ? 'fa-4x' : 'fa-2x' %>
+
+<div class="nav <%= in_root %>">
   <%= link_to cookbook_path, class: nav_link_styles(:cookbook) do %>
     <span class="section-icon">
       <span class="icon">
-        <i class="fas fa-book-open fa-2x"></i>
+        <i class="fas fa-book-open <%= icon_size %>"></i>
       </span>
     </span>
     <span>Cookbook</span>
@@ -10,7 +14,7 @@
   <%= link_to cookbook_path, class: nav_link_styles(:menu) do %>
     <span class="section-icon">
       <span class="icon">
-        <i class="fas fa-calendar fa-2x"></i>
+        <i class="fas fa-calendar <%= icon_size %>"></i>
       </span>
     </span>
     <span>Diet</span>
@@ -18,7 +22,7 @@
   <%= link_to cookbook_path, class: nav_link_styles(:shopping_list) do %>
     <span class="section-icon">
       <span class="icon">
-        <i class="fas fa-shopping-cart fa-2x"></i>
+        <i class="fas fa-shopping-cart <%= icon_size %>"></i>
       </span>
     </span>
     <span>List</span>

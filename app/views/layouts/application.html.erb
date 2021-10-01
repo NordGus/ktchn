@@ -12,10 +12,7 @@
 
   <body>
     <div class="applet">
-      <%= render 'layouts/navbar' %>
-      <div class="content">
-        <%= yield %>
-      </div>
+      <%= render 'layouts/navbar', root_view: true %>
     </div>
   </body>
 </html>
