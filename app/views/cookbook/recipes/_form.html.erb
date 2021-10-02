@@ -20,16 +20,17 @@
     </div>
     <div class="field-body">
       <div class="field"
-           data-controller="textarea-input"
-           data-textarea-input-limit-value="200"
+           data-controller="limited-input"
+           data-limited-input-limit-value="200"
       >
         <div class="control">
           <%= form.text_area :description,
                              class: textarea_class(:danger, !has_errors_for(recipe, :description)) + ' has-fixed-size',
-                             data: { 'textarea-input-target': 'field', action: 'keyup->textarea-input#updateCount' } %>
+                             placeholder: 'Please write a short description...',
+                             data: { 'limited-input-target': 'field', action: 'keyup->limited-input#updateCount' } %>
 
-          <span class="help" data-textarea-input-target="counter">
-            (<span data-textarea-input-target="currentCount"></span>/<span data-textarea-input-target="limit"></span>)
+          <span class="help" data-limited-input-target="counter">
+            (<span data-limited-input-target="currentCount"></span>/<span data-limited-input-target="limit"></span>)
           </span>
           <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :description } %>
         </div>

@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-class TextareaInputController extends Controller {
+class LimitedInputController extends Controller {
     static targets = ['field', 'counter', 'currentCount', 'limit']
     static values = { limit: Number }
 
@@ -31,4 +31,4 @@ class TextareaInputController extends Controller {
     }
 }
 
-export default TextareaInputController
+export default LimitedInputController
