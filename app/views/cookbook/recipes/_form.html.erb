@@ -1,30 +1,102 @@
 <%= form_with(model: recipe, scope: :recipe) do |form| %>
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-    <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :name } %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :name, class: 'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <%= form.text_field :name, class: input_class(:danger, !has_errors_for(recipe, :name)) %>
+        </div>
+        <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :name } %>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :portions %>
-    <%= form.number_field :portions, step: 1, max: 20 %>
-    <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :portions } %>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :description, class: 'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field"
+           data-controller="textarea-input"
+           data-textarea-input-limit-value="200"
+      >
+        <div class="control">
+          <%= form.text_area :description,
+                             class: textarea_class(:danger, !has_errors_for(recipe, :description)) + ' has-fixed-size',
+                             data: { 'textarea-input-target': 'field', action: 'keyup->textarea-input#updateCount' } %>
+
+          <span class="help" data-textarea-input-target="counter">
+            (<span data-textarea-input-target="currentCount"></span>/<span data-textarea-input-target="limit"></span>)
+          </span>
+          <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :description } %>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-    <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :description } %>
+<!--  <div class="field is-horizontal">-->
+<!--    <div class="field-label is-normal">-->
+      <%#= form.label :preparation, class: 'label' %>
+<!--    </div>-->
+<!--    <div class="field-body">-->
+<!--      <div class="field">-->
+<!--        <div class="control">-->
+          <%#= form.text_area :preparation, class: textarea_class(:danger, !has_errors_for(recipe, :preparation))  %>
+          <%#= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :preparation } %>
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+  <div class="field is-horizontal" data-controller="numeric-input">
+    <div class="field-label is-normal">
+      <%= form.label :portions, class: 'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field is-grouped is-expanded">
+        <div class="control">
+          <span
+            class="button is-danger is-light"
+            data-step="1"
+            data-action="click->numeric-input#decrement">
+            -1
+          </span>
+        </div>
+        <div class="control">
+          <%= form.text_field :portions,
+                              class: input_class(:danger, !has_errors_for(recipe, :portions)),
+                              readonly: true,
+                              data: { 'numeric-input-target': 'field' } %>
+        </div>
+        <div class="control">
+          <span
+            class="button is-success is-light"
+            data-step="1"
+            data-action="click->numeric-input#increment">
+            +1
+          </span>
+        </div>
+      </div>
+      <div class="is-flex is-align-items-center is-fullheight">
+        <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :portions } %>
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :preparation %>
-    <%= form.text_area :preparation %>
-    <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :preparation } %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit class: 'btn green' %>
-    <%= yield %>
+  <div class="field is-horizontal">
+    <div class="field-label"></div>
+    <div class="field-body">
+      <div class="field  is-grouped is-grouped-right">
+        <div class="control">
+          <div class="buttons">
+            <%= form.submit class: 'button is-primary' %>
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>

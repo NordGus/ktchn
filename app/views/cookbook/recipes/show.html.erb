@@ -1,24 +1,37 @@
-<p id="notice"><%= notice %></p>
-
 <%= turbo_frame_tag "main_display" do %>
-  <div class="flex flex-flow flex-nowrap items-baseline justify-between">
-    <h1><%= @recipe.name %></h1>
-    <h4>For <%= pluralize(@recipe.portions, 'person') %></h4>
+  <div
+    id="meta-container"
+    data-id="<%= @recipe.id %>"
+    class="is-flex is-flex-direction-row is-flex-wrap-nowrap is-justify-content-space-between pb-5">
+    <div class="is-inline-block">
+      <h1 class="title is-1"><%= @recipe.name %></h1>
+      <p class="subtitle">For <%= pluralize(@recipe.portions, 'person') %></p>
+    </div>
+    <div class="buttons">
+      <%= link_to 'Edit', edit_cookbook_recipe_path(@recipe), class: 'button is-info' %>
+      <%= link_to 'Destroy', @recipe, class: 'button is-danger', data: { confirm: 'Are you sure?', 'turbo-method': :delete } %>
+    </div>
   </div>
 
-  <p class="mt-2 mb-4 py-2 border-t-2 border-b-2"><%= @recipe.description %></p>
+  <div class="message">
+    <div class="message-body">
+      <% if @recipe.description.present? %>
+        <p><%= @recipe.description %></p>
+      <% else %>
+        <p><i>Please write a short description...</i></p>
+      <% end %>
+    </div>
+  </div>
 
   <%= turbo_frame_tag :recipe_ingredients, src: cookbook_recipe_ingredients_path(@recipe) do %>
     <span>Loading...</span>
   <% end %>
 
-  <% if @recipe.preparation.present? %>
-    <h2>Preparation</h2>
-    <p><%= @recipe.preparation %></p>
-  <% end %>
+  <%# if @recipe.preparation.present? %>
+<!--    <h2>Preparation</h2>-->
+<!--    <p><%#= @recipe.preparation %></p>-->
+  <%# end %>
 
   <div class="flex flex-row flex-nowrap justify-end">
-    <%= link_to 'Edit', edit_cookbook_recipe_path(@recipe), class: 'btn blue' %>
-    <%= link_to 'Destroy', @recipe, class: 'btn ml-2 red', data: { confirm: 'Are you sure?', 'turbo-method': :delete } %>
   </div>
 <% end %>

@@ -11,7 +11,9 @@
   </head>
 
   <body>
-    <div class="applet">
+    <div class="applet" data-controller="cookbook"
+         data-cookbook-is-active-class-value="is-link"
+         data-cookbook-recipe-container-class-value="message">
       <%= render 'layouts/navbar' %>
       <div class="content">
         <%= yield %>

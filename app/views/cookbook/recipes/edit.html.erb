@@ -1,5 +1,7 @@
 <%= turbo_frame_tag "main_display" do %>
+  <h1>Editing: <%= @recipe.name %></h1>
+
   <%= render layout: 'form', locals: { recipe: @recipe } do %>
-    <%= link_to 'Back', @recipe, class: 'btn' %>
+    <%= link_to 'Back', @recipe, class: 'button' %>
   <% end %>
 <% end %>

@@ -1,11 +1,13 @@
 class Cookbook::RecipesController < CookbookController
+  include FormsHelper
+
   layout false
 
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
 
   # GET /cookbook/recipes
   def index
-    @recipes = Cookbook::Recipe.all
+    @recipes = Cookbook::Recipe.order(created_at: :asc).all
   end
 
   # GET /cookbook/recipes/1

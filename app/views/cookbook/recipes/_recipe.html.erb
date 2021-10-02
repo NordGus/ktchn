@@ -1,13 +1,14 @@
+<% is_active ||= false %>
+
 <%= turbo_frame_tag dom_id(recipe), class: 'mb-2' do %>
   <%= link_to cookbook_recipe_path(recipe),
               class: 'is-block',
               data: {
-                'collection-target': 'item',
-                'resource-id': recipe.id,
-                action: 'turbo:click->collection#activate',
+                'cookbook-target': 'collection',
+                'id': recipe.id.to_s,
                 turbo: true,
                 'turbo-frame': :main_display } do %>
-    <div class="message is-small">
+    <div class="message is-small <%= 'is-link' if is_active %>">
       <div class="message-body">
         <h4 class="title is-5 is-link"><%= recipe.name %></h4>
         <p class="subtitle is-6"><%= recipe.description %></p>

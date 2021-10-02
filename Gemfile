@@ -28,8 +28,8 @@ gem 'turbo-rails', '~> 0.8.1'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'debase', '~> 0.2.5.beta2'
   gem 'ruby-debug-ide'
+  gem 'debase'
   gem 'rubocop'
 
   gem 'rspec-rails', '~> 5.0', '>= 5.0.2'

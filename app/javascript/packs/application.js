@@ -13,5 +13,3 @@ ActiveStorage.start()
 
 import "controllers"
 import "stylesheets/application.scss"
-
-document.addEventListener('turbo:load', () => console.log('Turbo!'))
