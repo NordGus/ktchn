@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "main_display" do %>
+<%= turbo_frame_tag :main_display do %>
   <div
     id="meta-container"
     data-id="<%= @recipe.id %>"
@@ -23,7 +23,10 @@
     </div>
   </div>
 
-  <%= turbo_frame_tag :recipe_ingredients, src: cookbook_recipe_ingredients_path(@recipe) do %>
+
+  <%= render 'cookbook/ingredients/new_button' %>
+
+  <%= turbo_frame_tag :ingredients, src: cookbook_recipe_ingredients_path(@recipe) do %>
     <span>Loading...</span>
   <% end %>
 

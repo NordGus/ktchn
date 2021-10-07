@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-class LimitedInputController extends Controller {
+export default class extends Controller {
     static targets = ['field', 'counter', 'currentCount', 'limit']
     static values = { limit: Number }
 
@@ -30,5 +30,3 @@ class LimitedInputController extends Controller {
         }
     }
 }
-
-export default LimitedInputController

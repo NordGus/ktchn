@@ -52,45 +52,18 @@
 <!--    </div>-->
 <!--  </div>-->
 
-  <div class="field is-horizontal" data-controller="numeric-input">
-    <div class="field-label is-normal">
-      <%= form.label :portions, class: 'label' %>
-    </div>
-    <div class="field-body">
-      <div class="field is-grouped is-expanded">
-        <div class="control">
-          <span
-            class="button is-danger is-light"
-            data-step="1"
-            data-action="click->numeric-input#decrement">
-            -1
-          </span>
-        </div>
-        <div class="control">
-          <%= form.text_field :portions,
-                              class: input_class(:danger, !has_errors_for(recipe, :portions)),
-                              readonly: true,
-                              data: { 'numeric-input-target': 'field' } %>
-        </div>
-        <div class="control">
-          <span
-            class="button is-success is-light"
-            data-step="1"
-            data-action="click->numeric-input#increment">
-            +1
-          </span>
-        </div>
-      </div>
-      <div class="is-flex is-align-items-center is-fullheight">
-        <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :portions } %>
-      </div>
-    </div>
-  </div>
+  <%= render 'shared/numeric_input_for',
+             form: form,
+             model: recipe,
+             attr: :portions,
+             steps: [1],
+             minimum: 1
+  %>
 
   <div class="field is-horizontal">
     <div class="field-label"></div>
     <div class="field-body">
-      <div class="field  is-grouped is-grouped-right">
+      <div class="field is-grouped is-grouped-right">
         <div class="control">
           <div class="buttons">
             <%= form.submit class: 'button is-primary' %>

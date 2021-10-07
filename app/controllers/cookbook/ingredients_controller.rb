@@ -5,8 +5,6 @@ class Cookbook::IngredientsController < CookbookController
 
   # GET /cookbook/recipes
   def index
-    @ingredient = Cookbook::Ingredient.new(recipe: @recipe)
-
     @ingredients = @recipe.ingredients.cookbook_collection
   end
 
@@ -16,7 +14,7 @@ class Cookbook::IngredientsController < CookbookController
 
   # GET /cookbook/recipes/new
   def new
-    @recipe = Cookbook::Recipe.new
+    @ingredient = Cookbook::Ingredient.new(recipe: @recipe)
   end
 
   # GET /cookbook/recipes/1/edit
@@ -25,10 +23,11 @@ class Cookbook::IngredientsController < CookbookController
 
   # POST /cookbook/recipes
   def create
-    @recipe = Cookbook::Recipe.new(cookbook_recipe_params)
+    @ingredient = Cookbook::Ingredient.new(cookbook_ingredient_params)
+    @ingredient.recipe = @recipe
 
-    if @recipe.save
-      redirect_to @recipe, notice: 'Recipe was successfully created.'
+    if @ingredient.save
+      render partial: 'new_button'
     else
       render :new
     end
@@ -36,7 +35,7 @@ class Cookbook::IngredientsController < CookbookController
 
   # PATCH/PUT /cookbook/recipes/1
   def update
-    if @recipe.update(cookbook_recipe_params)
+    if @recipe.update(cookbook_ingredient_params)
       redirect_to @recipe, notice: 'Recipe was successfully updated.'
     else
       render :edit
@@ -56,7 +55,11 @@ class Cookbook::IngredientsController < CookbookController
     @recipe = Cookbook::Recipe.find(params[:recipe_id])
   end
 
-  def cookbook_recipe_params
-    params.require(:recipe).permit(:name, :description, :preparation, :portions)
+  def cookbook_ingredient_params
+    params.require(:ingredient).tap do |p|
+      p[:inventory_unit_id] ||= p[:unit]
+
+      p.delete(:unit)
+    end.permit(:amount, :inventory_unit_id)
   end
 end

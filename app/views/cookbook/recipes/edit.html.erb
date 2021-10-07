@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "main_display" do %>
+<%= turbo_frame_tag :main_display do %>
   <h1>Editing: <%= @recipe.name %></h1>
 
   <%= render layout: 'form', locals: { recipe: @recipe } do %>

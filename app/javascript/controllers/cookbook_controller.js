@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-class CookbookController extends Controller {
+export default class extends Controller {
     static targets = ["collection", "mainContent"]
     static values = { isActiveClass: String, recipeContainerClass: String }
 
@@ -59,5 +59,3 @@ class CookbookController extends Controller {
         return recipeFrame.getElementsByClassName(this.collectionConfig.containerClass)[0]
     }
 }
-
-export default  CookbookController

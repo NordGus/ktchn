@@ -1,31 +1,42 @@
 import { Controller } from "@hotwired/stimulus";
 
-class NumericInputController extends Controller {
+export default class extends Controller {
     static targets = ['field']
-
-    connect() {
-        this.value = Number(this.fieldTarget.value)
-    }
+    static values = { min: Number, max: Number, fractionDigits: Number }
 
     increment(event) {
-        this.value += this._getStep(event.currentTarget)
+        const newValue = this._value + this._getStep(event.currentTarget)
 
-        this._refreshValue()
+        if (newValue > this._max) return
+
+        this._refreshValue(newValue)
     }
 
     decrement(event) {
-        this.value -= this._getStep(event.currentTarget)
+        const newValue = this._value - this._getStep(event.currentTarget)
 
-        this._refreshValue()
+        if (newValue < this._min) return
+
+        this._refreshValue(newValue)
     }
 
     _getStep(elem) {
         return Number(elem.dataset['step'])
     }
 
-    _refreshValue() {
-        this.fieldTarget.value = this.value
+    _refreshValue(value) {
+        this.fieldTarget.value = value.toFixed(this.fractionDigitsValue)
+    }
+
+    get _value() {
+        return Number(this.fieldTarget.value)
+    }
+
+    get _min() {
+        return Number(this.minValue)
+    }
+
+    get _max() {
+        return Number(this.maxValue)
     }
 }
-
-export default NumericInputController

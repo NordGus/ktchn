@@ -8,4 +8,8 @@ class Cookbook::Ingredient < ApplicationRecord
             numericality: { greater_than: 0, less_than: BigDecimal(10**12) }
 
   scope :cookbook_collection, -> { includes(:recipe, :item, :unit) }
+
+  after_create_commit { broadcast_append_to :ingredients }
+  after_update_commit { broadcast_replace_to :ingredients }
+  after_destroy_commit { broadcast_remove_to :ingredients }
 end

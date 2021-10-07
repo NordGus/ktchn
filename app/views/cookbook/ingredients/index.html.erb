@@ -1,4 +1,3 @@
-<%= turbo_frame_tag "recipe_ingredients" do %>
-  <%= render 'form', ingredient: @ingredient %>
+<%= turbo_frame_tag :ingredients do %>
   <%= render @ingredients %>
 <% end %>

@@ -1,22 +1,47 @@
-<%= form_with model: ingredient,
-              scope: :ingredient,
-              url: cookbook_recipe_ingredients_path(ingredient.recipe),
-              class: 'inline-form bg-blue-300' do |form| %>
+<div class="message is-dark" data-controller="ingredient">
+  <div class="message-body">
+    <%= form_with model: ingredient,
+                  scope: :ingredient,
+                  url: cookbook_recipe_ingredients_path(ingredient.recipe) do |form| %>
 
-  <div class="field">
-    <%= form.label :amount %>
-    <%= form.number_field :amount, step: 1, max: 20 %>
-    <%= render partial: 'shared/form_errors_for', locals: { model: ingredient, attr: :portions } %>
-  </div>
+      <%= render 'shared/numeric_input_for',
+                 form: form,
+                 model: ingredient,
+                 attr: :amount,
+                 steps: [0.001, 0.01, 0.1, 1],
+                 minimum: 0.001,
+                 fraction_digits: 3
+      %>
 
-  <div class="field">
-    <%= form.label :unit %>
-    <%= form.select :unit, options_from_collection_for_select(Inventory::Unit.all, :id, :name), { prompt: 'Select an unit' } %>
-    <%= render partial: 'shared/form_errors_for', locals: { model: ingredient, attr: :portions } %>
-  </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <%= form.label :inventory_unit_id, "Unit" %>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <div class="<%= select_class(:danger, !has_errors_for(ingredient, :unit)) %>">
+                <%= form.collection_select :inventory_unit_id, Inventory::Unit.all, :id, :name, prompt: true %>
+              </div>
+              <%= render partial: 'shared/form_errors_for', locals: { model: ingredient, attr: :unit } %>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <div class="actions">
-    <%= form.submit class: 'btn green' %>
-    <%= yield %>
+      <div class="field is-horizontal">
+        <div class="field-label"></div>
+        <div class="field-body">
+          <div class="field  is-grouped is-grouped-right">
+            <div class="control">
+              <div class="buttons">
+                <%= form.submit class: 'button is-info' %>
+                <%= yield %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

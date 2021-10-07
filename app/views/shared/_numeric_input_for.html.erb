@@ -1,0 +1,46 @@
+<% minimum ||= -Float::INFINITY %>
+<% maximum ||= Float::INFINITY %>
+<% fraction_digits ||= 0 %>
+
+<div class="field is-horizontal"
+     data-controller="numeric-input"
+     data-numeric-input-min-value="<%= can_be_infinity minimum %>"
+     data-numeric-input-max-value="<%= can_be_infinity maximum %>"
+     data-numeric-input-fraction-digits-value="<%= fraction_digits %>">
+  <div class="field-label is-normal">
+    <%= form.label attr %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="field has-addons">
+        <% steps.each do |step| %>
+          <div class="control">
+                  <span
+                    class="button is-danger"
+                    data-step="<%= step %>"
+                    data-action="click->numeric-input#decrement">
+                    -<%= step %>
+                  </span>
+          </div>
+        <% end %>
+        <div class="control">
+          <%= form.text_field attr,
+                              class: input_class(:danger, !has_errors_for(model, attr)),
+                              readonly: true,
+                              data: { 'numeric-input-target': 'field' } %>
+        </div>
+        <% steps.reverse.each do |step| %>
+          <div class="control">
+                  <span
+                    class="button is-success"
+                    data-step="<%= step %>"
+                    data-action="click->numeric-input#increment">
+                    +<%= step %>
+                  </span>
+          </div>
+        <% end %>
+      </div>
+      <%= render partial: 'shared/form_errors_for', locals: { model: model, attr: attr } %>
+    </div>
+  </div>
+</div>
