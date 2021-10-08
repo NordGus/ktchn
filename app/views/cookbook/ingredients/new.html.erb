@@ -1,3 +1,6 @@
 <%= turbo_frame_tag :new_ingredient do %>
-  <%= render 'form', ingredient: @ingredient %>
+  <%= render layout: 'form', locals: { ingredient: @ingredient } do %>
+    <%= link_to 'Cancel', cookbook_recipe_ingredients_path(@recipe), class: 'button' %>
+  <% end %>
+
 <% end %>

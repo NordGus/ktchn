@@ -4,6 +4,8 @@ services:
     build: .
     image: ktchn-app
     command: tail -f /dev/null
+    environment:
+      ELASTICSEARCH_URL: "http://es:9200"
     volumes:
       - .:/var/app
       - ./node_modules:/var/app/node_modules
@@ -15,6 +17,38 @@ services:
     depends_on:
       - db
       - redis
+      - kibana
+
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    container_name: elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - ktchn-es:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.15.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://es:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - es
 
   db:
     image: postgres:13
@@ -31,3 +65,5 @@ services:
 
 volumes:
   ktchn-db:
+  ktchn-es:
+    driver: local

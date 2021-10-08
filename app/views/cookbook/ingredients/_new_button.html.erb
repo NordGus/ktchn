@@ -1,5 +1,1 @@
-<%= turbo_frame_tag :new_ingredient do %>
-  <div class="buttons is-right">
-    <%= link_to 'Add Ingredient', new_cookbook_recipe_ingredient_path(@recipe), class: 'button is-primary' %>
-  </div>
-<% end %>
+<%= link_to 'New Ingredient', new_cookbook_recipe_ingredient_path(@recipe), class: 'button is-link is-fullwidth' %>

@@ -6,7 +6,7 @@
               class: 'button is-link',
               data: {
                 turbo: true,
-                'turbo-frame': :main_display,
+                turbo_frame: :main_display,
               } do %>
       <span class="icon">
         <i class="fas fa-plus"></i>
@@ -26,7 +26,7 @@
                       src: new_cookbook_recipe_path,
                       data: {
                         action: 'turbo:frame-render->cookbook#setActiveRecipe',
-                        'cookbook-target': 'mainContent'
+                        cookbook_target: 'mainContent'
                       },
                       class: 'main-display' do %>
     <span>Loading...</span>

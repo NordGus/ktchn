@@ -27,7 +27,7 @@
           <%= form.text_area :description,
                              class: textarea_class(:danger, !has_errors_for(recipe, :description)) + ' has-fixed-size',
                              placeholder: 'Please write a short description...',
-                             data: { 'limited-input-target': 'field', action: 'keyup->limited-input#updateCount' } %>
+                             data: { limited_input_target: 'field', action: 'keyup->limited-input#updateCount' } %>
 
           <span class="help" data-limited-input-target="counter">
             (<span data-limited-input-target="currentCount"></span>/<span data-limited-input-target="limit"></span>)

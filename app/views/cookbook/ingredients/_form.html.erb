@@ -1,8 +1,41 @@
-<div class="message is-dark" data-controller="ingredient">
+<div class="message" data-controller="item-search">
   <div class="message-body">
     <%= form_with model: ingredient,
                   scope: :ingredient,
-                  url: cookbook_recipe_ingredients_path(ingredient.recipe) do |form| %>
+                  url: cookbook_recipe_ingredients_path(ingredient.recipe), data: { action: 'turbo:before-fetch-request->item-search#prepareItem' } do |form| %>
+
+      <div class="field is-horizontal">
+        <%= form.hidden_field :inventory_item_id,
+                              data: { item_search_target: 'hidden', item_name: '' } %>
+
+        <%= form.fields_for :item, ingredient.item do |item_form| %>
+          <div class="field-label is-normal">
+            <%= item_form.label :name, 'Item' %>
+          </div>
+          <div class="field-body">
+            <div class="field is-relative">
+              <div class="panel context-menu is-hidden" data-item-search-target="loader">
+                <div class="panel-block">
+                  <progress class="progress is-primary is-small" max="100"></progress>
+                </div>
+              </div>
+
+              <%= turbo_frame_tag :item_search_results,
+                                  class: 'panel is-hidden context-menu',
+                                  data: { item_search_target: 'results' } do %>
+              <% end %>
+
+              <div class="field">
+                <div class="control">
+                  <%= item_form.text_field :name,
+                                           class: 'input',
+                                           data: { item_search_target: 'search', action: 'keyup->item-search#searchItems' } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
 
       <%= render 'shared/numeric_input_for',
                  form: form,
@@ -35,7 +68,7 @@
           <div class="field  is-grouped is-grouped-right">
             <div class="control">
               <div class="buttons">
-                <%= form.submit class: 'button is-info' %>
+                <%= form.submit class: 'button is-primary' %>
                 <%= yield %>
               </div>
             </div>

@@ -1,2 +1,2 @@
-class CookbookController < ActionController::Base
+class InventoryController < ActionController::Base
 end

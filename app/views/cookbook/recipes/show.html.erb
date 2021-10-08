@@ -9,7 +9,7 @@
     </div>
     <div class="buttons">
       <%= link_to 'Edit', edit_cookbook_recipe_path(@recipe), class: 'button is-info' %>
-      <%= link_to 'Destroy', @recipe, class: 'button is-danger', data: { confirm: 'Are you sure?', 'turbo-method': :delete } %>
+      <%= link_to 'Destroy', @recipe, class: 'button is-danger', data: { confirm: 'Are you sure?', turbo_method: :delete } %>
     </div>
   </div>
 
@@ -23,18 +23,43 @@
     </div>
   </div>
 
+  <div class="m-0 p-0" data-controller="tabs">
+    <div class="tabs is-centered is-boxed is-large is-fullwidth">
+      <ul class="m-0">
+        <% %w(Preparation Ingredients).each_with_index do |tab, idx| %>
+          <%= content_tag :li,
+                          content_tag(:a, tab),
+                          class: "#{'is-active' if idx.zero?}",
+                          data: {
+                            action: 'click->tabs#showTab',
+                            content_name: tab.underscore,
+                            tabs_target: 'tab'
+                          } %>
+        <% end %>
+      </ul>
+    </div>
 
-  <%= render 'cookbook/ingredients/new_button' %>
+    <%# preparation %>
+    <div class="m-0 py-0 px-4" data-tabs-target="content" data-name="preparation">
+      <% if @recipe.preparation.present? %>
+        <div><%= @recipe.preparation %></div>
+      <% else %>
+        <p><i>This recipe doesn't have preparation yet</i></p>
+      <% end %>
+    </div>
 
-  <%= turbo_frame_tag :ingredients, src: cookbook_recipe_ingredients_path(@recipe) do %>
-    <span>Loading...</span>
-  <% end %>
+    <%# ingredients %>
+    <div class="m-0 p-0 py-0 px-4 is-hidden" data-tabs-target="content" data-name="ingredients">
+      <%= turbo_frame_tag :new_ingredient do %>
+        <%= render 'cookbook/ingredients/new_button' %>
+      <% end %>
 
-  <%# if @recipe.preparation.present? %>
-<!--    <h2>Preparation</h2>-->
-<!--    <p><%#= @recipe.preparation %></p>-->
-  <%# end %>
+      <%= turbo_stream_from :ingredients %>
+      <%= turbo_frame_tag :ingredients,
+                          src: cookbook_recipe_ingredients_path(@recipe), class: 'mt-4' do %>
+        <span>Loading...</span>
+      <% end %>
+    </div>
 
-  <div class="flex flex-row flex-nowrap justify-end">
   </div>
 <% end %>

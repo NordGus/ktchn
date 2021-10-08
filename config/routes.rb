@@ -4,14 +4,14 @@ Rails.application.routes.draw do
 
   namespace :cookbook do
     resources :recipes do
-      resources :ingredients do
-        namespace :inventory do
-          resources :items, only: [] do
-            collection do
-              get :search
-            end
-          end
-        end
+      resources :ingredients
+    end
+  end
+
+  namespace :inventory do
+    resources :items, only: [] do
+      collection do
+        post :search
       end
     end
   end

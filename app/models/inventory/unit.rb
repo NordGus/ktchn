@@ -1,6 +1,8 @@
 class Inventory::Unit < ApplicationRecord
   include Prepper
 
+  has_many :ingredients, :class_name => 'Cookbook::Ingredient', foreign_key: :inventory_unit_id, dependent: :destroy
+
   before_validation :clean_name, :downcase_name
 
   validates :name, presence: true, uniqueness: { scope: [:category] }
@@ -12,6 +14,4 @@ class Inventory::Unit < ApplicationRecord
     length: 3,
     surface: 4,
   }, _suffix: :category
-
-  has_many :ingredients, :class_name => 'Cookbook::Ingredient', foreign_key: :inventory_unit_id
 end

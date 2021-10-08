@@ -2,19 +2,16 @@ class Cookbook::IngredientsController < CookbookController
   layout false
 
   before_action :set_recipe
+  before_action :set_ingredient, only: [:edit, :update, :destroy]
 
   # GET /cookbook/recipes
   def index
     @ingredients = @recipe.ingredients.cookbook_collection
   end
 
-  # GET /cookbook/recipes/1
-  def show
-  end
-
   # GET /cookbook/recipes/new
   def new
-    @ingredient = Cookbook::Ingredient.new(recipe: @recipe)
+    @ingredient = Cookbook::Ingredient.new(recipe: @recipe, item: Inventory::Item.new)
   end
 
   # GET /cookbook/recipes/1/edit
@@ -23,19 +20,16 @@ class Cookbook::IngredientsController < CookbookController
 
   # POST /cookbook/recipes
   def create
-    @ingredient = Cookbook::Ingredient.new(cookbook_ingredient_params)
-    @ingredient.recipe = @recipe
+    @ingredient = @recipe.ingredients.build(cookbook_ingredient_params)
 
-    if @ingredient.save
-      render partial: 'new_button'
-    else
-      render :new
+    unless @ingredient.save
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /cookbook/recipes/1
   def update
-    if @recipe.update(cookbook_ingredient_params)
+    if @ingredient.update(cookbook_ingredient_params)
       redirect_to @recipe, notice: 'Recipe was successfully updated.'
     else
       render :edit
@@ -44,9 +38,7 @@ class Cookbook::IngredientsController < CookbookController
 
   # DELETE /cookbook/recipes/1
   def destroy
-    @recipe.destroy
-
-    render :new
+    @ingredient.destroy
   end
 
   private
@@ -55,11 +47,17 @@ class Cookbook::IngredientsController < CookbookController
     @recipe = Cookbook::Recipe.find(params[:recipe_id])
   end
 
+  def set_ingredient
+    @ingredient = @recipe.ingredients.find(params[:id])
+  end
+
   def cookbook_ingredient_params
     params.require(:ingredient).tap do |p|
       p[:inventory_unit_id] ||= p[:unit]
-
       p.delete(:unit)
-    end.permit(:amount, :inventory_unit_id)
+
+      p.delete(:item_attributes) if p[:inventory_item_id].present?
+      p.delete(:inventory_item_id) if p[:item_attributes].present?
+    end.permit(:amount, :inventory_unit_id, :inventory_item_id, item_attributes: [:name])
   end
 end

@@ -27,7 +27,7 @@
           <%= form.text_field attr,
                               class: input_class(:danger, !has_errors_for(model, attr)),
                               readonly: true,
-                              data: { 'numeric-input-target': 'field' } %>
+                              data: { numeric_input_target: 'field' } %>
         </div>
         <% steps.reverse.each do |step| %>
           <div class="control">

@@ -1,0 +1,8 @@
+<%= turbo_stream.update :item_search_results do %>
+  <% @items.each do |item| %>
+    <%= link_to item.name, '', class: 'panel-block', data: {
+      id: item.id,
+      name: item.name,
+      action: "click->item-search#selectItem" } %>
+  <% end %>
+<% end %>
