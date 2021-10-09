@@ -1,4 +1,10 @@
 <%= turbo_frame_tag :main_display do %>
+  <div
+    class="is-hidden"
+    data-id="<%= @recipe.id %>"
+    data-cookbook-target="contentMeta">
+  </div>
+
   <h1>Editing: <%= @recipe.name %></h1>
 
   <%= render layout: 'form', locals: { recipe: @recipe } do %>

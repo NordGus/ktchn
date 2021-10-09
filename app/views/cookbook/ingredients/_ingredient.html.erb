@@ -1,5 +1,5 @@
-<%= turbo_frame_tag dom_id(ingredient) do %>
-  <div class="message is-primary is-medium mb-4">
+<%= turbo_frame_tag dom_id(ingredient), class: "mb-4" do %>
+  <div class="message is-dark is-medium">
     <div class="message-body is-flex is-justify-content-space-between is-align-items-center">
       <p class="is-capitalized m-0 mr-4">
         <span class="has-text-weight-bold"><%= ingredient.item.name %>:</span>
@@ -11,8 +11,11 @@
         <%= ingredient.unit.name %>
       </p>
 
-      <div class="buttons">
-        <%= link_to 'Destroy',
+      <div class="buttons has-addons">
+        <%= link_to t('views.defaults.actions.short.edit'),
+                    edit_cookbook_recipe_ingredient_path(ingredient.recipe, ingredient),
+                    class: 'button is-info' %>
+        <%= link_to t('views.defaults.actions.short.destroy'),
                     cookbook_recipe_ingredient_path(ingredient.recipe, ingredient),
                     class: 'button is-danger',
                     data: { confirm: 'Are you sure?', turbo_method: :delete } %>

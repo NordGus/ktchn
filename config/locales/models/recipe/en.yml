@@ -1,0 +1,6 @@
+en:
+  models:
+    recipe:
+      empty:
+        description: Insert catchy short description...
+        preparation: Insert a comprehensive and detailed list preparation instructions...

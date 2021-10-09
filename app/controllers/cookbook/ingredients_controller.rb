@@ -2,11 +2,15 @@ class Cookbook::IngredientsController < CookbookController
   layout false
 
   before_action :set_recipe
-  before_action :set_ingredient, only: [:edit, :update, :destroy]
+  before_action :set_ingredient, only: [:edit, :show, :update, :destroy]
 
   # GET /cookbook/recipes
   def index
     @ingredients = @recipe.ingredients.cookbook_collection
+  end
+
+  def show
+    render @ingredient, status: :ok
   end
 
   # GET /cookbook/recipes/new
@@ -29,9 +33,7 @@ class Cookbook::IngredientsController < CookbookController
 
   # PATCH/PUT /cookbook/recipes/1
   def update
-    if @ingredient.update(cookbook_ingredient_params)
-      redirect_to @recipe, notice: 'Recipe was successfully updated.'
-    else
+    unless @ingredient.update(cookbook_ingredient_params)
       render :edit
     end
   end

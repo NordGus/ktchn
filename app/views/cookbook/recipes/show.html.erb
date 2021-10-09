@@ -1,25 +1,36 @@
 <%= turbo_frame_tag :main_display do %>
   <div
-    id="meta-container"
+    class="is-hidden"
     data-id="<%= @recipe.id %>"
+    data-cookbook-target="contentMeta">
+  </div>
+
+  <div
     class="is-flex is-flex-direction-row is-flex-wrap-nowrap is-justify-content-space-between pb-5">
     <div class="is-inline-block">
       <h1 class="title is-1"><%= @recipe.name %></h1>
       <p class="subtitle">For <%= pluralize(@recipe.portions, 'person') %></p>
     </div>
-    <div class="buttons">
-      <%= link_to 'Edit', edit_cookbook_recipe_path(@recipe), class: 'button is-info' %>
-      <%= link_to 'Destroy', @recipe, class: 'button is-danger', data: { confirm: 'Are you sure?', turbo_method: :delete } %>
+    <div class="buttons has-addons">
+      <%= link_to t('views.defaults.actions.short.edit'),
+                  edit_cookbook_recipe_path(@recipe),
+                  class: 'button is-info' %>
+      <%= link_to t('views.defaults.actions.short.destroy'),
+                  @recipe,
+                  class: 'button is-danger',
+                  data: { confirm: 'Are you sure?', turbo_method: :delete } %>
     </div>
   </div>
 
   <div class="message">
     <div class="message-body">
-      <% if @recipe.description.present? %>
-        <p><%= @recipe.description %></p>
-      <% else %>
-        <p><i>Please write a short description...</i></p>
-      <% end %>
+      <p>
+        <% if @recipe.description.present? %>
+          <%= @recipe.description %>
+        <% else %>
+          <i><%= t('models.recipe.empty.description') %></i>
+        <% end %>
+      </p>
     </div>
   </div>
 
@@ -44,12 +55,13 @@
       <% if @recipe.preparation.present? %>
         <div><%= @recipe.preparation %></div>
       <% else %>
-        <p><i>This recipe doesn't have preparation yet</i></p>
+        <p><i><%= t('models.recipe.empty.preparation') %></i></p>
       <% end %>
     </div>
 
     <%# ingredients %>
     <div class="m-0 p-0 py-0 px-4 is-hidden" data-tabs-target="content" data-name="ingredients">
+      <%= turbo_stream_from :new_ingredient %>
       <%= turbo_frame_tag :new_ingredient do %>
         <%= render 'cookbook/ingredients/new_button' %>
       <% end %>

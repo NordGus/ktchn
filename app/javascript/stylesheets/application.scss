@@ -127,16 +127,29 @@ body {
       }
     }
 
-    .field.is-relative {
-      .context-menu {
-        position: absolute;
-        bottom: 2rem;
-        left: 0;
-        background-color: $white;
+    .field {
+      &.is-relative {
+        .context-menu {
+          position: absolute;
+          bottom: 2rem;
+          left: 0;
+          background-color: $white;
 
-        .panel-block {
-          min-width: 10rem;
+          .panel-block {
+            min-width: 10rem;
+          }
         }
+      }
+
+      .control.is-expanded {
+        .select {
+          width: 100%;
+
+          select {
+            width: 100%;
+          }
+      }
+
       }
     }
 

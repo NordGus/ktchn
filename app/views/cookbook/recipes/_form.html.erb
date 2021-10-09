@@ -7,7 +7,9 @@
     <div class="field-body">
       <div class="field">
         <div class="control">
-          <%= form.text_field :name, class: input_class(:danger, !has_errors_for(recipe, :name)) %>
+          <%= form.text_field :name,
+                              class: input_class(:danger, !has_errors_for(recipe, :name)),
+                              placeholder: "Cleverly unique name..." %>
         </div>
         <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :name } %>
       </div>
@@ -26,7 +28,7 @@
         <div class="control">
           <%= form.text_area :description,
                              class: textarea_class(:danger, !has_errors_for(recipe, :description)) + ' has-fixed-size',
-                             placeholder: 'Please write a short description...',
+                             placeholder: 'Catchy short description...',
                              data: { limited_input_target: 'field', action: 'keyup->limited-input#updateCount' } %>
 
           <span class="help" data-limited-input-target="counter">

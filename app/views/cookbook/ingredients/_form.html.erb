@@ -1,79 +1,79 @@
+<% is_update ||= false %>
+<%
+  form_url = if is_update
+               cookbook_recipe_ingredient_path(ingredient.recipe)
+             else
+               cookbook_recipe_ingredients_path(ingredient.recipe)
+             end
+%>
+
 <div class="message" data-controller="item-search">
   <div class="message-body">
     <%= form_with model: ingredient,
                   scope: :ingredient,
-                  url: cookbook_recipe_ingredients_path(ingredient.recipe), data: { action: 'turbo:before-fetch-request->item-search#prepareItem' } do |form| %>
+                  url: form_url,
+                  method: is_update ? :put : :post,
+                  data: { action: 'turbo:before-fetch-request->item-search#prepareItem' } do |form| %>
 
-      <div class="field is-horizontal">
-        <%= form.hidden_field :inventory_item_id,
-                              data: { item_search_target: 'hidden', item_name: '' } %>
-
-        <%= form.fields_for :item, ingredient.item do |item_form| %>
-          <div class="field-label is-normal">
-            <%= item_form.label :name, 'Item' %>
-          </div>
-          <div class="field-body">
-            <div class="field is-relative">
-              <div class="panel context-menu is-hidden" data-item-search-target="loader">
-                <div class="panel-block">
-                  <progress class="progress is-primary is-small" max="100"></progress>
-                </div>
-              </div>
-
-              <%= turbo_frame_tag :item_search_results,
-                                  class: 'panel is-hidden context-menu',
-                                  data: { item_search_target: 'results' } do %>
-              <% end %>
-
-              <div class="field">
-                <div class="control">
-                  <%= item_form.text_field :name,
-                                           class: 'input',
-                                           data: { item_search_target: 'search', action: 'keyup->item-search#searchItems' } %>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-
-      <%= render 'shared/numeric_input_for',
-                 form: form,
-                 model: ingredient,
-                 attr: :amount,
-                 steps: [0.001, 0.01, 0.1, 1],
-                 minimum: 0.001,
-                 fraction_digits: 3
-      %>
-
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <%= form.label :inventory_unit_id, "Unit" %>
-        </div>
-        <div class="field-body">
+      <div class="columns is-multiline">
+        <div class="column is-three-fifths">
           <div class="field">
-            <div class="control">
-              <div class="<%= select_class(:danger, !has_errors_for(ingredient, :unit)) %>">
-                <%= form.collection_select :inventory_unit_id, Inventory::Unit.all, :id, :name, prompt: true %>
+            <%= form.hidden_field :inventory_item_id,
+                                  data: { item_search_target: 'hidden', item_name: '' } %>
+
+            <%= form.fields_for :item, ingredient.item do |item_form| %>
+              <%= item_form.label :name, 'Item', class: 'label' %>
+              <div class="field is-relative">
+                <div class="panel context-menu is-hidden" data-item-search-target="loader">
+                  <div class="panel-block">
+                    <progress class="progress is-primary is-small" max="100"></progress>
+                  </div>
+                </div>
+
+                <%= turbo_frame_tag :item_search_results,
+                                    class: 'panel is-hidden context-menu',
+                                    data: { item_search_target: 'results' } do %>
+                <% end %>
+
+                <div class="field">
+                  <div class="control">
+                    <%= item_form.text_field :name,
+                                             class: 'input',
+                                             data: { item_search_target: 'search', action: 'keyup->item-search#searchItems' } %>
+                  </div>
+                </div>
               </div>
-              <%= render partial: 'shared/form_errors_for', locals: { model: ingredient, attr: :unit } %>
+            <% end %>
+          </div>
+        </div>
+        <div class="column is-two-fifths">
+          <div class="field">
+            <%= form.label :inventory_unit_id, "Unit", class: 'label' %>
+            <div class="field">
+              <div class="control is-expanded">
+                <div class="<%= select_class(:danger, !has_errors_for(ingredient, :unit)) %>">
+                  <%= form.collection_select :inventory_unit_id, Inventory::Unit.all, :id, :name, prompt: true %>
+                </div>
+                <%= render partial: 'shared/form_errors_for', locals: { model: ingredient, attr: :unit } %>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="column is-full">
+          <%= render 'shared/numeric_input_for',
+                     form: form,
+                     model: ingredient,
+                     attr: :amount,
+                     steps: [0.001, 0.01, 0.1, 1],
+                     minimum: 0.001,
+                     fraction_digits: 3
+          %>
         </div>
       </div>
 
-      <div class="field is-horizontal">
-        <div class="field-label"></div>
-        <div class="field-body">
-          <div class="field  is-grouped is-grouped-right">
-            <div class="control">
-              <div class="buttons">
-                <%= form.submit class: 'button is-primary' %>
-                <%= yield %>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="buttons has-addons is-right">
+        <%= form.submit class: 'button is-primary' %>
+        <%= yield %>
       </div>
     <% end %>
   </div>

@@ -1,5 +1,12 @@
 <%= turbo_frame_tag :main_display do %>
-  <h1>Create Recipe</h1>
+  <div
+    class="is-hidden"
+    data-cookbook-target="contentMeta">
+  </div>
+
+  <div class="block">
+    <h1 class="title is-1">New Recipe</h1>
+  </div>
 
   <%= render 'form', recipe: @recipe %>
 <% end %>

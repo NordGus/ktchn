@@ -1,0 +1,8 @@
+en:
+  views:
+    defaults:
+      actions:
+        short:
+          new: Add
+          edit: Edit
+          destroy: Delete
