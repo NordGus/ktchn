@@ -8,35 +8,33 @@
      data-numeric-input-max-value="<%= can_be_infinity maximum %>"
      data-numeric-input-fraction-digits-value="<%= fraction_digits %>">
   <%= form.label attr, class: 'label' %>
-  <div class="field">
-    <div class="field has-addons">
-      <% steps.each do |step| %>
-        <div class="control">
-                <span
-                  class="button is-danger"
-                  data-step="<%= step %>"
-                  data-action="click->numeric-input#decrement">
-                  <%= step.to_s.gsub("0.", ".") %>
-                </span>
-        </div>
-      <% end %>
-      <div class="control is-expanded">
-        <%= form.text_field attr,
-                            class: input_class(:danger, !has_errors_for(model, attr)),
-                            readonly: true,
-                            data: { numeric_input_target: 'field' } %>
+  <div class="field is-grouped">
+    <% steps.each do |step| %>
+      <div class="control">
+              <span
+                class="button is-danger"
+                data-step="<%= step %>"
+                data-action="click->numeric-input#decrement">
+                <%= step.to_s.gsub("0.", ".") %>
+              </span>
       </div>
-      <% steps.reverse.each do |step| %>
-        <div class="control">
-                <span
-                  class="button is-success"
-                  data-step="<%= step %>"
-                  data-action="click->numeric-input#increment">
-                  <%= step.to_s.gsub("0.", ".") %>
-                </span>
-        </div>
-      <% end %>
+    <% end %>
+    <div class="control is-expanded">
+      <%= form.text_field attr,
+                          class: input_class(:danger, !has_errors_for(model, attr)),
+                          readonly: true,
+                          data: { numeric_input_target: 'field' } %>
     </div>
-    <%= render partial: 'shared/form_errors_for', locals: { model: model, attr: attr } %>
+    <% steps.reverse.each do |step| %>
+      <div class="control">
+        <span
+          class="button is-success"
+          data-step="<%= step %>"
+          data-action="click->numeric-input#increment">
+          <%= step.to_s.gsub("0.", ".") %>
+        </span>
+      </div>
+    <% end %>
   </div>
+  <%= render partial: 'shared/form_errors_for', locals: { model: model, attr: attr } %>
 </div>

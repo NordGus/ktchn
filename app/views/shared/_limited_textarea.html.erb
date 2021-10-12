@@ -1,0 +1,18 @@
+<div class="field">
+  <%= form.label attr, class: 'label' %>
+    <div class="field"
+         data-controller="limited-input"
+         data-limited-input-limit-value="<%= limit %>"
+    >
+    <div class="control">
+      <%= form.text_area attr,
+                         class: textarea_class(:danger, !has_errors_for(model, attr)) + ' has-fixed-size',
+                         placeholder: 'Catchy short description...',
+                         data: { limited_input_target: 'field', action: 'keyup->limited-input#updateCount' } %>
+      <span class="help" data-limited-input-target="counter">
+          (<span data-limited-input-target="currentCount"></span>/<span data-limited-input-target="limit"></span>)
+        </span>
+      <%= render partial: 'shared/form_errors_for', locals: { model: model, attr: attr } %>
+    </div>
+  </div>
+</div>

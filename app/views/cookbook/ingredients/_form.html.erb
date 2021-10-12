@@ -64,14 +64,14 @@
                      form: form,
                      model: ingredient,
                      attr: :amount,
-                     steps: [0.001, 0.01, 0.1, 1],
+                     steps: [0.01, 0.1, 1],
                      minimum: 0.001,
                      fraction_digits: 3
           %>
         </div>
       </div>
 
-      <div class="buttons has-addons is-right">
+      <div class="buttons is-right">
         <%= form.submit class: 'button is-primary' %>
         <%= yield %>
       </div>

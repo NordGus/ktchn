@@ -1,42 +1,35 @@
 <%= form_with(model: recipe, scope: :recipe) do |form| %>
 
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <%= form.label :name, class: 'label' %>
-    </div>
-    <div class="field-body">
+  <div class="columns is-multiline">
+    <div class="column is-two-thirds">
       <div class="field">
-        <div class="control">
-          <%= form.text_field :name,
-                              class: input_class(:danger, !has_errors_for(recipe, :name)),
-                              placeholder: "Cleverly unique name..." %>
-        </div>
-        <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :name } %>
-      </div>
-    </div>
-  </div>
-
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <%= form.label :description, class: 'label' %>
-    </div>
-    <div class="field-body">
-      <div class="field"
-           data-controller="limited-input"
-           data-limited-input-limit-value="200"
-      >
-        <div class="control">
-          <%= form.text_area :description,
-                             class: textarea_class(:danger, !has_errors_for(recipe, :description)) + ' has-fixed-size',
-                             placeholder: 'Catchy short description...',
-                             data: { limited_input_target: 'field', action: 'keyup->limited-input#updateCount' } %>
-
-          <span class="help" data-limited-input-target="counter">
-            (<span data-limited-input-target="currentCount"></span>/<span data-limited-input-target="limit"></span>)
-          </span>
-          <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :description } %>
+        <%= form.label :name, class: 'label' %>
+        <div class="field">
+          <div class="control">
+            <%= form.text_field :name,
+                                class: input_class(:danger, !has_errors_for(recipe, :name)),
+                                placeholder: "Cleverly unique name..." %>
+          </div>
+          <%= render partial: 'shared/form_errors_for', locals: { model: recipe, attr: :name } %>
         </div>
       </div>
+    </div>
+    <div class="column is-one-third">
+      <%= render 'shared/numeric_input_for',
+                 form: form,
+                 model: recipe,
+                 attr: :portions,
+                 steps: [1],
+                 minimum: 1
+      %>
+    </div>
+    <div class="column is-full">
+      <%= render 'shared/limited_textarea',
+                 form: form,
+                 model: recipe,
+                 attr: :description,
+                 limit: 200
+      %>
     </div>
   </div>
 
@@ -54,25 +47,8 @@
 <!--    </div>-->
 <!--  </div>-->
 
-  <%= render 'shared/numeric_input_for',
-             form: form,
-             model: recipe,
-             attr: :portions,
-             steps: [1],
-             minimum: 1
-  %>
-
-  <div class="field is-horizontal">
-    <div class="field-label"></div>
-    <div class="field-body">
-      <div class="field is-grouped is-grouped-right">
-        <div class="control">
-          <div class="buttons">
-            <%= form.submit class: 'button is-primary' %>
-            <%= yield %>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="buttons is-right">
+    <%= form.submit class: 'button is-primary' %>
+    <%= yield %>
   </div>
 <% end %>
